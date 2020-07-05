@@ -1,0 +1,118 @@
+﻿@model IEnumerable<EIS.Models.EmpDetail>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+@using (Html.BeginForm("Index", "Admin", FormMethod.Get))
+{
+    @Html.TextBox("searching")
+    <input type="submit" value="Search by name" />
+}
+<br>
+<div id="dvData">
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btnExport").click(function (e) {
+                window.open('data:application/vnd.ms-excel,' + encodeURIComponent($('div[id$=dvData]').html()));
+                e.preventDefault();
+            });
+        });
+    </script>
+    <table class="table">
+        <tr>
+            <th>
+                Employee id
+            </th>
+            <th>
+                First name
+            </th>
+            <th>
+                Last name
+            </th>
+            <th>
+                Date of Birth
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContactNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email_id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PAN)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Designation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Salary)
+            </th>
+            <th></th>
+        </tr>
+        @if (Model.Count() == 0)
+        {
+            <tr>
+                <td colspan="3" style="color:red">
+                    No match found
+                </td>
+            </tr>
+        }
+        else
+        {
+
+
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Emp_id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Fname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Lname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DOB)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ContactNo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email_id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PAN)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Address)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Designation)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Salary)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Emp_id }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.Emp_id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Emp_id })
+                    </td>
+                </tr>
+            }
+        }
+
+    </table>
+    </div>
+    <input type="button" id="btnExport" value="Report Download" />
